@@ -7,7 +7,7 @@
   "scripts": ["patchClass.js", "patchFog.js", "patchDice.js", "patchSound.js"],
   "styles": [],
   "packs": []
-  "url": "https://github.com/trdischat/fvtt/patches",
-  "manifest": "https://github.com/trdischat/fvtt/patches/raw/master/module.json",
-  "download": "https://github.com/trdischat/fvtt/patches/raw/master/patches.zip"
+  "url": "https://github.com/trdischat/fvtt/tree/master/patches",
+  "manifest": "https://github.com/trdischat/fvtt/raw/master/patches/module.json",
+  "download": "https://github.com/trdischat/fvtt/raw/master/patches/patches.zip"
 }
