@@ -1,11 +1,13 @@
 # FVTT Patches
-Module to apply following patches to Foundry VTT:
-  * patchFog: Allow GM to see through the FOW and to see all tokens on the canvas.
-  * patchSound: apply volume easing to selected volume level of sound effect
-  * patchDice: average of 2d20 rolls for normal checks and saves; limit dice to reroll (applies to the dnd5e system)
-All patches rely on the patchClass utility function. 
+Module to apply the following patches to Foundry VTT:
+  * **patchFog**: Allow GM to see through the FOW and to see all tokens on the canvas.
+  * **patchSound**: Apply volume easing to selected volume level of sound effect.
+  * **patchDice**: Average of 2d20 rolls for normal checks and saves; limit dice to reroll (applies to the dnd5e system).
+
+All patches rely on the **patchClass** utility function. 
   
-Effect of patchFog: compare GM view on the left to Player view on the right
+Effect of **patchFog**: compare GM view on the left to Player view on the right
+
 ![Illustrate effect of lessfog module](lessfog.jpg "Compare GM view to Player view with lessfog enabled")
 
 # Installation
