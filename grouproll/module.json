@@ -6,7 +6,7 @@
   "author": "trdischat",
   "scripts": ["./scripts/rolls.js", "./scripts/config.js", "./scripts/abilities.js", "./scripts/skills.js", "./scripts/patches.js"],
   "styles": [],
-  "packs": []
+  "packs": [],
   "url": "https://github.com/trdischat/fvtt/tree/master/grouproll",
   "manifest": "https://github.com/trdischat/fvtt/raw/master/grouproll/module.json",
   "download": "https://github.com/trdischat/fvtt/raw/master/grouproll/grouproll.zip"
