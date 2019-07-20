@@ -1,32 +1,33 @@
 function patchClass(klass, func, line_number, line, new_line) {
-    let funcStr = func.toString()
-    let lines = funcStr.split("\n")
-    if (lines[line_number].trim() == line.trim()) {
-        lines[line_number] = lines[line_number].replace(line, new_line);
+  let funcStr = func.toString()
+  let lines = funcStr.split("\n")
+  if (lines[line_number].trim() == line.trim()) {
+    lines[line_number] = lines[line_number].replace(line, new_line);
     classStr = klass.toString()
     fixedClass = classStr.replace(funcStr, lines.join("\n"))
-    return  eval ("(" + fixedClass + ")")
-    } else {
-//        console.log("Function has wrong content at line ", line_number, " : ", lines[line_number].trim(), " != ", line.trim(), "\n", funcStr)
-    }
+    return Function('"use strict";return (' + fixedClass + ')')();
+  }
+  else {
+    console.log("Function has wrong content at line ", line_number, " : ", lines[line_number].trim(), " != ", line.trim(), "\n", funcStr)
+  }
 }
 
 function patchSceneControlsClass() {
   newClass = patchClass(SceneControls, SceneControls.prototype.configure, 17,
-    `icon: "fas fa-ruler"`,
-    `icon: "fas fa-ruler"
-        },
-        skills: {
-          name: "Group Skill Check",
-          icon: "fas fa-user-check",
-          onClick: () => runGroupSkillCheck(),
-          visible: isGM
-        },
-        abilities: {
-          name: "Group Ability Check",
-          icon: "fas fa-user-shield",
-          onClick: () => runGroupAbilityCheck(),
-          visible: isGM`);
+  `icon: "fas fa-ruler"`,
+  `icon: "fas fa-ruler"
+    },
+    skills: {
+      name: "Group Skill Check",
+      icon: "fas fa-user-check",
+      onClick: () => runGroupSkillCheck(),
+      visible: isGM
+    },
+    abilities: {
+      name: "Group Ability Check",
+      icon: "fas fa-user-shield",
+      onClick: () => runGroupAbilityCheck(),
+      visible: isGM`);
   if (!newClass) return;
   SceneControls =  newClass;
 }
