@@ -1,0 +1,43 @@
+<form autocomplete="off" onsubmit="event.preventDefault();">
+  <div>
+    <table id="options">
+      <tr>
+        <td style="width: 50%; text-align: left">
+          <label>Ability</label>
+          <select name="select-ability" data-dtype="String">
+            {{#select abl}}
+            {{#each abilities as |label ability|}}
+            <option value="{{ability}}">{{label}}</option>
+            {{/each}}
+            {{/select}}
+          </select>
+        </td>
+        <td style="width: 35%; text-align: left">
+          <input type="checkbox" name="sav" {{checked sav}}/><label>Saving Throw?</label>
+        </td>
+        <td style="width: 15%; text-align: left">
+          <b>Roll: {{rollresult}}</b>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div>
+    <table id="party">
+      <tr>
+          <th style="width: 50%; text-align: left">Name</th>
+          <th>Advantage</th>
+          <th>Bonus</th>
+          <th>Modifier</th>
+      </tr>
+      {{#each tok}}
+      <tr>
+          <td style="width: 50%; text-align: left"><span class="name">{{ this.name }}</span></td>
+          <td style="text-align: center"><span class="value"><input type="hidden" name="adv-{{ this.id }}" value={{ this.adv }} data-dtype="Number"/><a class="advantage-mode" title="{{this.hover}}">{{{this.icon}}}</a></span></td>
+          <td style="text-align: center"><span class="bonus-value"><input name="bon-{{ this.id }}" value={{ this.bon }} type="number" min="0" style="width: 4em; text-align: center"></span></td>
+          <td style="text-align: center"><span class="value">{{ this.mod }}</span></td>
+      </tr>
+      {{/each}}
+    </table>
+  </div>
+</form>
+
