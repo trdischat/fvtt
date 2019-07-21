@@ -117,6 +117,24 @@ class GroupSkillCheck extends Application {
 
 }
 
-function runGroupSkillCheck() {
-  return new GroupSkillCheck().render(true);
-}
+
+Hooks.on('renderSceneControls', (obj, html, data) => {
+  if (obj.controls.token.tools.grouproll_skills == undefined) {
+    obj.controls.token.tools.grouproll_skills = {
+      name: "Group Skill Check",
+      icon: "fas fa-user-check",
+      onClick: () => {return new GroupSkillCheck().render(true)},
+      visible: game.user.isGM
+    };
+    obj.render();
+  };
+  if (obj.controls.token.tools.grouproll_abilities == undefined) {
+    obj.controls.token.tools.grouproll_abilities = {
+      name: "Group Ability Check",
+      icon: "fas fa-user-shield",
+      onClick: () => {return new GroupAbilityCheck().render(true)},
+      visible: game.user.isGM
+    };
+    obj.render();
+  };
+});

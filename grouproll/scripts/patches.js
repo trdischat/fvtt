@@ -12,27 +12,6 @@ function patchClass(klass, func, line_number, line, new_line) {
   }
 }
 
-function patchSceneControlsClass() {
-  newClass = patchClass(SceneControls, SceneControls.prototype.configure, 17,
-  `icon: "fas fa-ruler"`,
-  `icon: "fas fa-ruler"
-    },
-    skills: {
-      name: "Group Skill Check",
-      icon: "fas fa-user-check",
-      onClick: () => runGroupSkillCheck(),
-      visible: isGM
-    },
-    abilities: {
-      name: "Group Ability Check",
-      icon: "fas fa-user-shield",
-      onClick: () => runGroupAbilityCheck(),
-      visible: isGM`);
-  if (!newClass) return;
-  SceneControls =  newClass;
-}
-
-patchSceneControlsClass()
 
 /* Patch Die and Roll classes to allow limit on number of dice to reroll (e.g.,
  * a halfing rolling an attack with advantage would use '2d20r1=1kh' to roll
