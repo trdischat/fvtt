@@ -26,8 +26,8 @@ class GroupSkillCheck extends Application {
       tok: this.tokList,
       skl: this.skillName,
       abl: this.abilityName,
-      skills: CONFIG.skillTypes,
-      abilities: CONFIG.abilityTypes,
+      skills: game.system.template.actor.data.skills,
+      abilities: game.system.template.actor.data.abilities,
       rollresult: this.groupRoll
     };
   }
@@ -41,8 +41,8 @@ class GroupSkillCheck extends Application {
       let oldToken = tList.find(x => x.id === t.id && x.name === t.name);
       let advNew = oldToken ? oldToken.adv : 0;
       let bonNew = oldToken ? oldToken.bon : 0;
-      let advIcon = CONFIG.advantageStatus[advNew].icon;
-      let advHover = CONFIG.advantageStatus[advNew].label;
+      let advIcon = CONFIG._grouproll_module_advantageStatus[advNew].icon;
+      let advHover = CONFIG._grouproll_module_advantageStatus[advNew].label;
       return {id: t.id, name: t.name, adv: advNew, icon: advIcon, hover: advHover, bon: bonNew, mod: sklmod, luck: lucky};
     })
   }
@@ -85,7 +85,7 @@ class GroupSkillCheck extends Application {
       let newAbility = html.find('[name="select-ability"]').val();
       if (this.skillName !== newSkill) {
         this.skillName = newSkill;
-        this.abilityName = CONFIG.skillTypes[this.skillName].ability;
+        this.abilityName = game.system.template.actor.data.skills[this.skillName].ability;
       }
       else if (this.abilityName !== newAbility) this.abilityName = newAbility;
       this.render();

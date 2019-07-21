@@ -16,8 +16,8 @@
           <label>Ability</label>
           <select name="select-ability" data-dtype="String">
             {{#select abl}}
-            {{#each abilities as |label ability|}}
-            <option value="{{ability}}">{{label}}</option>
+            {{#each abilities as |value ability|}}
+            <option value="{{ability}}">{{value.label}}</option>
             {{/each}}
             {{/select}}
           </select>

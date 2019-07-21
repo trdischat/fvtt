@@ -26,7 +26,7 @@ class GroupAbilityCheck extends Application {
       tok: this.tokList,
       sav: this.saveRoll,
       abl: this.abilityName,
-      abilities: CONFIG.abilityTypes,
+      abilities: game.system.template.actor.data.abilities,
       rollresult: this.groupRoll
     };
   }
@@ -39,8 +39,8 @@ class GroupAbilityCheck extends Application {
       let oldToken = tList.find(x => x.id === t.id && x.name === t.name);
       let advNew = oldToken ? oldToken.adv : 0;
       let bonNew = oldToken ? oldToken.bon : 0;
-      let advIcon = CONFIG.advantageStatus[advNew].icon;
-      let advHover = CONFIG.advantageStatus[advNew].label;
+      let advIcon = CONFIG._grouproll_module_advantageStatus[advNew].icon;
+      let advHover = CONFIG._grouproll_module_advantageStatus[advNew].label;
       return {id: t.id, name: t.name, adv: advNew, icon: advIcon, hover: advHover, bon: bonNew, mod: ablmod, luck: lucky};
     })
   }

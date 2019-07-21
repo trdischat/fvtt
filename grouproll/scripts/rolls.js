@@ -9,14 +9,14 @@ function midValue(rolls) {
 }
 
 function chkRoll(adv, bon, modifier, lucky) {
-  if (CONFIG.halflingLuckEnabled) var luck = lucky ? "r1=1" : "";
+  if (CONFIG._grouproll_module_halflingLuckEnabled) var luck = lucky ? "r1=1" : "";
   else var luck = "";
   var rStr;
   var rData = {bonus: bon, mod: modifier};
   if (adv === 1) rStr = "2d20" + luck + "kh";
   else if (adv === -1) rStr = "2d20" + luck + "kl";
   else {
-    if (CONFIG.averageRolls) {
+    if (CONFIG._grouproll_module_averageRolls) {
       let coinToss = new Roll("1d2-1").roll();
       rData.coin = coinToss.total;
       rStr = "2d10" + luck + " - @coin";
@@ -28,7 +28,7 @@ function chkRoll(adv, bon, modifier, lucky) {
 }
 
 function hitRoll(adv, bon, modifier, lucky) {
-  if (CONFIG.halflingLuckEnabled) var luck = lucky ? "r1=1" : "";
+  if (CONFIG._grouproll_module_halflingLuckEnabled) var luck = lucky ? "r1=1" : "";
   else var luck = "";
   var rStr;
   var rData = {bonus: bon, mod: modifier};
