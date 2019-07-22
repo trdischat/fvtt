@@ -1,12 +1,83 @@
-class GroupSkillCheck extends Application {
+class GroupRoll5e extends Application {
 
   constructor(object, options) {
     super(options);
-
-    this.skillName = "acr";
-    this.abilityName = "dex";
     this.tokList = [];
     this.groupRoll = "";
+  }
+
+  static get defaultOptions() {
+    const options = super.defaultOptions;
+    options.width = 450;
+    options.height = "auto";
+    options.resizable = true;
+    return options;
+  }
+
+  doGroupCheck(tList) {
+    let tRolls = tList.map(t => {
+      return chkRoll(Number(t.adv), Number(t.bon), Number(t.mod), t.luck)
+    });
+    let tResults = tRolls.map(t => t.total);
+    this.groupRoll = midValue(tResults);
+//    console.log(tRolls); // uncomment this line to see the individuals rolls in the console
+    this.render();
+  }
+
+  _getHeaderButtons() {
+    let buttons = super._getHeaderButtons();
+    buttons = [
+      {
+        label: "Update",
+        class: "update-values",
+        icon: "fas fa-redo",
+        onclick: ev => this.render()
+      },
+      {
+        label: "Roll",
+        class: "roll-dice",
+        icon: "fas fa-dice-d20",
+        onclick: ev => this.doGroupCheck(this.tokList)
+      }
+    ].concat(buttons);
+    return buttons
+  }
+
+  activateListeners(html) {
+    super.activateListeners(html);
+
+    // Change roll bonus
+    html.find('.bonus-value').change(event => {
+      this.tokList = this.tokList.map(t => {
+        t.bon = html.find('input[name="bon-' + t.id + '"]').val();
+        return t;
+      });
+      this.render();
+    });
+
+    // Toggle advantage status
+    html.find('.advantage-mode').click(event => {
+      event.preventDefault();
+      let field = $(event.currentTarget).siblings('input[type="hidden"]');
+      let level = Number(field.val());
+      let newLevel = ( level === 1 ) ? -1 : level + 1;
+      field.val(newLevel);
+      this.tokList = this.tokList.map(t => {
+        t.adv = html.find('input[name="adv-' + t.id + '"]').val();
+        return t;
+      });
+      this.render();
+    });
+  }
+
+}
+
+class GroupSkillCheck extends GroupRoll5e {
+
+  constructor(object, options) {
+    super(options);
+    this.skillName = "acr";
+    this.abilityName = "dex";
   }
 
 	static get defaultOptions() {
@@ -14,9 +85,6 @@ class GroupSkillCheck extends Application {
 	  options.id = "group-skill-check";
 	  options.title = "Group Skill Check";
 	  options.template = "public/modules/grouproll/templates/group-skill-check.html";
-	  options.width = 450;
-    options.height = "auto";
-    options.resizable = true;
 	  return options;
   }
 
@@ -47,35 +115,6 @@ class GroupSkillCheck extends Application {
     })
   }
 
-  doGroupCheck(tList, skl, abl) {
-    let tRolls = tList.map(t => {
-      return chkRoll(Number(t.adv), Number(t.bon), Number(t.mod), t.luck)
-    });
-    let tResults = tRolls.map(t => t.total);
-    this.groupRoll = midValue(tResults);
-//    console.log(tRolls); // uncomment this line to see the individuals rolls in the console
-    this.render();
-  }
-
-  _getHeaderButtons() {
-    let buttons = super._getHeaderButtons();
-    buttons = [
-      {
-        label: "Update",
-        class: "update-values",
-        icon: "fas fa-redo",
-        onclick: ev => this.render()
-      },
-      {
-        label: "Roll",
-        class: "roll-dice",
-        icon: "fas fa-dice-d20",
-        onclick: ev => this.doGroupCheck(this.tokList, this.skillName, this.abilityName)
-      }
-    ].concat(buttons);
-    return buttons
-  }
-
   activateListeners(html) {
     super.activateListeners(html);
 
@@ -90,42 +129,16 @@ class GroupSkillCheck extends Application {
       else if (this.abilityName !== newAbility) this.abilityName = newAbility;
       this.render();
     });
-
-    // Change roll bonus
-    html.find('.bonus-value').change(event => {
-      this.tokList = this.tokList.map(t => {
-        t.bon = html.find('input[name="bon-' + t.id + '"]').val();
-        return t;
-      });
-      this.render();
-    });
-
-    // Toggle advantage status
-    html.find('.advantage-mode').click(event => {
-      event.preventDefault();
-      let field = $(event.currentTarget).siblings('input[type="hidden"]');
-      let level = Number(field.val());
-      let newLevel = ( level === 1 ) ? -1 : level + 1;
-      field.val(newLevel);
-      this.tokList = this.tokList.map(t => {
-        t.adv = html.find('input[name="adv-' + t.id + '"]').val();
-        return t;
-      });
-      this.render();
-    });
   }
 
 }
 
-class GroupAbilityCheck extends Application {
+class GroupAbilityCheck extends GroupRoll5e {
 
   constructor(object, options) {
     super(options);
-
     this.saveRoll = false;
     this.abilityName = "dex";
-    this.tokList = [];
-    this.groupRoll = "";
   }
 
 	static get defaultOptions() {
@@ -133,9 +146,6 @@ class GroupAbilityCheck extends Application {
 	  options.id = "group-ability-check";
 	  options.title = "Group Ability Check";
 	  options.template = "public/modules/grouproll/templates/group-ability-check.html";
-	  options.width = 450;
-    options.height = "auto";
-    options.resizable = true;
 	  return options;
   }
 
@@ -164,35 +174,6 @@ class GroupAbilityCheck extends Application {
     })
   }
 
-  doGroupCheck(tList, skl, abl) {
-    let tRolls = tList.map(t => {
-      return chkRoll(Number(t.adv), Number(t.bon), Number(t.mod), t.luck)
-    });
-    let tResults = tRolls.map(t => t.total);
-    this.groupRoll = midValue(tResults);
-//    console.log(tRolls); // uncomment this line to see the individuals rolls in the console
-    this.render();
-  }
-
-  _getHeaderButtons() {
-    let buttons = super._getHeaderButtons();
-    buttons = [
-      {
-        label: "Update",
-        class: "update-values",
-        icon: "fas fa-redo",
-        onclick: ev => this.render()
-      },
-      {
-        label: "Roll",
-        class: "roll-dice",
-        icon: "fas fa-dice-d20",
-        onclick: ev => this.doGroupCheck(this.tokList, this.saveRoll, this.abilityName)
-      }
-    ].concat(buttons);
-    return buttons
-  }
-
   activateListeners(html) {
     super.activateListeners(html);
 
@@ -210,29 +191,6 @@ class GroupAbilityCheck extends Application {
     // Toggle save roll
     html.find('input[type="checkbox"]').change(event => {
       this.saveRoll = event.target.checked;
-      this.render();
-    });
-
-    // Change roll bonus
-    html.find('.bonus-value').change(event => {
-      this.tokList = this.tokList.map(t => {
-        t.bon = html.find('input[name="bon-' + t.id + '"]').val();
-        return t;
-      });
-      this.render();
-    });
-
-    // Toggle advantage status
-    html.find('.advantage-mode').click(event => {
-      event.preventDefault();
-      let field = $(event.currentTarget).siblings('input[type="hidden"]');
-      let level = Number(field.val());
-      let newLevel = ( level === 1 ) ? -1 : level + 1;
-      field.val(newLevel);
-      this.tokList = this.tokList.map(t => {
-        t.adv = html.find('input[name="adv-' + t.id + '"]').val();
-        return t;
-      });
       this.render();
     });
   }
