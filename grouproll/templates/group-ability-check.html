@@ -1,43 +1,36 @@
 <form autocomplete="off" onsubmit="event.preventDefault();">
-  <div>
-    <table id="options">
-      <tr>
-        <td style="width: 50%; text-align: left">
-          <label>Ability</label>
-          <select name="select-ability" data-dtype="String">
-            {{#select abl}}
-            {{#each abilities as |value ability|}}
-            <option value="{{ability}}">{{value.label}}</option>
-            {{/each}}
-            {{/select}}
-          </select>
-        </td>
-        <td style="width: 35%; text-align: left">
-          <input type="checkbox" name="sav" {{checked sav}}/><label>Saving Throw?</label>
-        </td>
-        <td style="width: 15%; text-align: left">
-          <b>Roll: {{rollresult}}</b>
-        </td>
-      </tr>
-    </table>
+
+  <div class="grm-grid" style="grid-template-columns: 1fr 4fr 2fr 3fr 2fr 25px">
+    <div class="grm-label">Ability</div>
+    <div class="grm-select">          
+      <select name="select-ability" data-dtype="String">
+        {{#select abl}}
+        {{#each abilities as |value ability|}}
+        <option value="{{ability}}">{{value.label}}</option>
+        {{/each}}
+        {{/select}}
+      </select>
+    </div>
+    <div class="grm-label">Saving&nbsp;Throw?</div>  
+    <div class="grm-select">
+      <input type="checkbox" name="sav" {{checked sav}}/>
+    </div>
+    <div class="grm-label">Roll</div>
+    <div class="grm-roll">{{rollresult}}</div>
   </div>
-  <div>
-    <table id="party">
-      <tr>
-          <th style="width: 50%; text-align: left">Name</th>
-          <th>Advantage</th>
-          <th>Bonus</th>
-          <th>Modifier</th>
-      </tr>
-      {{#each tok}}
-      <tr>
-          <td style="width: 50%; text-align: left"><span class="name">{{ this.name }}</span></td>
-          <td style="text-align: center"><span class="value"><input type="hidden" name="adv-{{ this.id }}" value={{ this.adv }} data-dtype="Number"/><a class="advantage-mode" title="{{this.hover}}">{{{this.icon}}}</a></span></td>
-          <td style="text-align: center"><span class="bonus-value"><input name="bon-{{ this.id }}" value={{ this.bon }} type="number" min="0" style="width: 4em; text-align: center"></span></td>
-          <td style="text-align: center"><span class="value">{{ this.mod }}</span></td>
-      </tr>
-      {{/each}}
-    </table>
+
+  <div class="grm-grid" style="grid-template-columns: auto 75px 75px 75px">
+    <div class="grm-hdr grm-name-col">Name</div>
+    <div class="grm-hdr">Advantage</div>
+    <div class="grm-hdr">Bonus</div>
+    <div class="grm-hdr">Modifier</div>
+    {{#each tok}}
+    <div class="grm-name-col"><span class="name">{{ this.name }}</span></div>
+    <div><span class="value"><input type="hidden" name="adv-{{ this.id }}" value={{ this.adv }} data-dtype="Number"/><a class="advantage-mode" title="{{this.hover}}">{{{this.icon}}}</a></span></div>
+    <div><span class="bonus-value"><input name="bon-{{ this.id }}" value={{ this.bon }} type="number" min="0" style="width: 4em; text-align: center"></span></div>
+    <div><span class="value">{{ this.mod }}</span></div>
+    {{/each}}
   </div>
+
 </form>
 
