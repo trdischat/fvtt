@@ -10,7 +10,7 @@ class GroupRoll5e extends Application {
     const options = super.defaultOptions;
     options.width = 450;
     options.height = "auto";
-    options.resizable = true;
+    options.resizable = false;
     return options;
   }
 

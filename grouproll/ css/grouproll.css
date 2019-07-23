@@ -26,8 +26,21 @@
 }
 
 .grm-hdr {
-  grid-row: 1/2;
   font-weight: bold;
+}
+
+.grm-tbl-rows {
+  grid-template-rows: min-content;
+  grid-auto-rows: min-content;
+  align-content; start;
+  grid-row-gap: 5px;
+  height: calc(9.2em + 35px);
+}
+
+.grm-tbl-cols {
+  grid-template-columns: 1fr 75px 75px 75px;
+  overflow-y: scroll;
+  scrollbar-width: none;
 }
 
 .grm-name-col {

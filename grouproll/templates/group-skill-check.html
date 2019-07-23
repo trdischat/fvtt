@@ -25,11 +25,14 @@
     <div class="grm-roll">{{rollresult}}</div>
   </div>
 
-  <div class="grm-grid" style="grid-template-columns: auto 75px 75px 75px">
-    <div class="grm-hdr grm-name-col">Name</div>
-    <div class="grm-hdr">Advantage</div>
-    <div class="grm-hdr">Bonus</div>
-    <div class="grm-hdr">Modifier</div>
+  <div class="grm-grid grm-tbl-cols grm-hdr">
+    <div class="grm-name-col">Name</div>
+    <div>Advantage</div>
+    <div>Bonus</div>
+    <div>Modifier</div>
+  </div>
+
+  <div class="grm-grid grm-tbl-cols grm-tbl-rows">
     {{#each tok}}
     <div class="grm-name-col"><span class="name">{{ this.name }}</span></div>
     <div><span class="value"><input type="hidden" name="adv-{{ this.id }}" value={{ this.adv }} data-dtype="Number"/><a class="advantage-mode" title="{{this.hover}}">{{{this.icon}}}</a></span></div>
