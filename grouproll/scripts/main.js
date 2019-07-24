@@ -202,7 +202,11 @@ Hooks.on('renderSceneControls', (obj, html, data) => {
     obj.controls.token.tools.grouproll_skills = {
       name: "Group Skill Check",
       icon: "fas fa-user-check",
-      onClick: () => {return new GroupSkillCheck().render(true)},
+      onClick: () => {
+        obj.activeControl = "token";
+        obj.controls[obj.activeControl].activeTool = "select";
+        return new GroupSkillCheck().render(true);
+      },
       visible: game.user.isGM
     };
     obj.render();
@@ -211,7 +215,11 @@ Hooks.on('renderSceneControls', (obj, html, data) => {
     obj.controls.token.tools.grouproll_abilities = {
       name: "Group Ability Check",
       icon: "fas fa-user-shield",
-      onClick: () => {return new GroupAbilityCheck().render(true)},
+      onClick: () => {
+        obj.activeControl = "token";
+        obj.controls[obj.activeControl].activeTool = "select";
+        return new GroupAbilityCheck().render(true);
+      },
       visible: game.user.isGM
     };
     obj.render();
