@@ -2,14 +2,13 @@
   display: grid;
   grid-template-columns: auto;
   grid-template-rows: auto;
-  grid-column-gap: 5px;
-  padding: 5px;
+  grid-column-gap: 0.5em;
+  padding: 0.5ex;
   justify-items: center;
   align-items: center;
   grid-auto-flow: row;
   border: 1px solid black;
 }
-
 
 .grm-label {
   justify-self: end;
@@ -32,13 +31,13 @@
 .grm-tbl-rows {
   grid-template-rows: min-content;
   grid-auto-rows: min-content;
-  align-content; start;
-  grid-row-gap: 5px;
-  height: calc(9.2em + 35px);
+  align-content: start;
+  grid-row-gap: 0.7ex;
+  height: 24ex;
 }
 
 .grm-tbl-cols {
-  grid-template-columns: 1fr 75px 75px 75px;
+  grid-template-columns: 1fr repeat(3, 5em);
   overflow-y: scroll;
   scrollbar-width: none;
 }
