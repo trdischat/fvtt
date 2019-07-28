@@ -198,7 +198,7 @@ class GroupAbilityCheck extends GroupRoll5e {
 }
 
 Hooks.on('renderSceneControls', (obj, html, data) => {
-  if (obj.controls.token.tools.grouproll_skills == undefined) {
+  if (obj.controls.token.tools.grouproll_skills == undefined && game.user.isGM) {
     obj.controls.token.tools.grouproll_skills = {
       name: "Group Skill Check",
       icon: "fas fa-user-check",
@@ -211,7 +211,7 @@ Hooks.on('renderSceneControls', (obj, html, data) => {
     };
     obj.render();
   };
-  if (obj.controls.token.tools.grouproll_abilities == undefined) {
+  if (obj.controls.token.tools.grouproll_abilities == undefined && game.user.isGM) {
     obj.controls.token.tools.grouproll_abilities = {
       name: "Group Ability Check",
       icon: "fas fa-user-shield",
