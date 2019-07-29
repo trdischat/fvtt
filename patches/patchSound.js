@@ -9,6 +9,7 @@ function patchSoundsLayerClass() {
     SoundsLayer = newClass
 }
 
-patchSoundsLayerClass()
-
-
+if (patchedSoundsLayerClass == undefined) {
+  patchSoundsLayerClass();
+  var patchedSoundsLayerClass = true;
+}

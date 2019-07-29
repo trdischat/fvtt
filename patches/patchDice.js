@@ -16,7 +16,10 @@ function patchDice5eClass() {
 //    console.log("Changed function : \n", oldRoll, "\nInto : \n", Dice5e.d20Roll.toString())
 }
 
-patchDice5eClass()
+if (patchedDice5eClass == undefined) {
+  patchDice5eClass();
+  var patchedDice5eClass = true;
+}
 
 function patchDieClass() {
   newClass = patchClass(Die, Die.prototype.reroll, 0,
@@ -36,7 +39,10 @@ function patchDieClass() {
   CONFIG.diceTypes[CONFIG.diceTypes.findIndex(d => d.name === "Die")] = Die
 }
 
-patchDieClass()
+if (patchedDieClass == undefined) {
+  patchDieClass();
+  var patchedDieClass = true;
+}
 
 function patchRollClass() {
     newClass = patchClass(Roll, Roll.prototype.constructor, 38,
@@ -50,4 +56,7 @@ function patchRollClass() {
     Roll = newClass
 }
 
-patchRollClass()
+if (patchedRollClass == undefined) {
+  patchRollClass();
+  var patchedRollClass = true;
+}

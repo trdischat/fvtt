@@ -35,7 +35,10 @@ function patchDieClass() {
     CONFIG.diceTypes[CONFIG.diceTypes.findIndex(d => d.name === "Die")] = Die
 }
 
-patchDieClass()
+if (patchedDieClass == undefined) {
+  patchDieClass();
+  var patchedDieClass = true;
+}
 
 function patchRollClass() {
     newClass = patchClass(Roll, Roll.prototype.constructor, 38,
@@ -49,4 +52,7 @@ function patchRollClass() {
     Roll = newClass
 }
 
-patchRollClass()
+if (patchedRollClass == undefined) {
+  patchRollClass();
+  var patchedRollClass = true;
+}
