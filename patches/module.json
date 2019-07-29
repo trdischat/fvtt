@@ -2,7 +2,7 @@
   "name": "patches",
   "title": "System Patches",
   "description": "Personal collection of patches to core and system scripts.",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "author": "trdischat",
   "scripts": ["patchClass.js", "patchFog.js", "patchDice.js", "patchSound.js"],
   "styles": [],
