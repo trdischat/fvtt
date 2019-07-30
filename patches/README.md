@@ -5,6 +5,8 @@ Module to apply the following patches to Foundry VTT:
   * **patchDice**: Average of 2d20 rolls for normal checks and saves; limit dice to reroll (applies to the dnd5e system).
 
 All patches rely on the **patchClass** utility function. 
+
+Module also includes some extra CSS styles to add color to Play and Stop buttons in playlists.
   
 Effect of **patchFog**: compare GM view on the left to Player view on the right
 
