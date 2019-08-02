@@ -31,7 +31,7 @@ if (patchedPlaylistDirectoryClass == undefined) {
 }
 
 /**
- * Patch Playlist class to implement random loop delays
+ * Patch Playlist class to implement random loop delays and randon volume adjustments
  */
 function patchPlaylistClass() {
     newClass = patchClass(Playlist, Playlist.prototype._onEnd, 5,
@@ -39,13 +39,19 @@ function patchPlaylistClass() {
       `if ( sound.repeat ) {
       if ( sound.flags.mindelay === undefined || sound.flags.maxdelay === undefined) return;
       else {
-        let h = this.howls[sound.id].howl;
-        h.stop(howlId);
+        let p = this;
+        p.updateSound({id: sound.id, playing: false});
         let tMin = sound.flags.mindelay;
         let tMax = sound.flags.maxdelay;
         let tDelay = Math.floor( 1000 * ( tMin + ( Math.random() * (tMax-tMin) ) ) );
-        setTimeout( function() { h.play(howlId); }, tDelay);
+        setTimeout( function() { p.updateSound({id: sound.id, playing: true}); }, tDelay);
         return;}}`);
+    if (!newClass) return;
+    newClass = patchClass(newClass, Playlist.prototype.playSound, 12,
+      `let vol = sound.volume * game.settings.get("core", "globalPlaylistVolume");`,
+      `let minVol = ( sound.flags.minvolume === undefined ) ? 1.0 : parseFloat(sound.flags.minvolume);
+      let volAdj = ( minVol === 1.0 ) ? 1.0 : Math.pow( minVol + ( Math.random() * ( 1 - minVol )), 2);
+      let vol = sound.volume * game.settings.get("core", "globalPlaylistVolume") * volAdj;`);
     if (!newClass) return;
     Playlist = newClass
 }
@@ -56,7 +62,7 @@ if (patchedPlaylistClass == undefined) {
 }
 
 /**
- * Use custom template for PlaylistSoundConfig to set range of pause between sounds 
+ * Use custom template for PlaylistSoundConfig to configure random delays and random volume adjustments 
  */
 replaceDefaultOptions = function(class_) {
   defaultOptionsProperty = Object.getOwnPropertyDescriptor(class_, "defaultOptions");
