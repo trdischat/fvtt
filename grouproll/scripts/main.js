@@ -43,6 +43,9 @@ class GroupRoll5e extends Application {
     return buttons
   }
 
+  // Update dialog display on changes to token selection
+  // Hooks.on("controlToken", (object, controlled) => { this.render() });
+
   activateListeners(html) {
     super.activateListeners(html);
 
