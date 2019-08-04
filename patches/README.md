@@ -1,10 +1,6 @@
 # FVTT Patches
 Module to apply the following patches to Foundry VTT:
 
-## patchFog
-* Allow GM to see through the FOW.
-* Allow the GM to see all tokens on the canvas.
-
 ## patchSound
 * Apply volume easing to the selected volume level of a sound effect.
 * Only display playlists to the GM.
@@ -17,9 +13,7 @@ Module to apply the following patches to Foundry VTT:
 
 Most of the patches rely on the **patchClass** utility function.
 
-Effect of **patchFog**: compare GM view on the left to Player view on the right
-
-![Illustrate effect of lessfog module](lessfog.jpg "Compare GM view to Player view with lessfog enabled")
+As of FVTT version 0.3.4, the patchFog patch is no longer necessary, and therefore has been remoced from the module.
 
 # Installation
 Extract the patches.zip file to the public/modules directory. As DM go to the `Manage Modules` options menu in your World ('?' icon on the side bar) then enable the `System Patches` module.  If not all patches are desired, edit modules.json to delete references to unwanted patches.  Do not delete the reference to `patchClass.js`.  This utility function is used to apply the patches and is required.
