@@ -4,6 +4,9 @@ class GroupRoll5e extends Application {
     super(options);
     this.tokList = [];
     this.groupRoll = "";
+    Hooks.on("controlToken", (object, controlled) => {
+      this.render();
+    });
   }
 
   static get defaultOptions() {
