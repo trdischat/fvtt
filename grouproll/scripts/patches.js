@@ -41,7 +41,7 @@ if (patchedDieClass == undefined) {
 }
 
 function patchRollClass() {
-    newClass = patchClass(Roll, Roll.prototype.constructor, 38,
+    newClass = patchClass(Roll, Roll.prototype.constructor, 43,
       `reroll: /r(<=|>=|<|>)?([0-9]+)?/,`,
       `reroll: /r(<=|>=|<|>)?([0-9]+)?(?:=([0-9]+))?/,`);
     if (!newClass) return;
