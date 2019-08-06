@@ -3,6 +3,7 @@ class GroupRoll5e extends Application {
   constructor(object, options) {
     super(options);
     this.tokList = [];
+    this.mstList = {};
     this.groupRoll = "";
     Hooks.on("controlToken", (object, controlled) => {
       this.render();
@@ -11,19 +12,20 @@ class GroupRoll5e extends Application {
 
   static get defaultOptions() {
     const options = super.defaultOptions;
-    options.width = 450;
+    options.width = 500;
     options.height = "auto";
     options.resizable = false;
     return options;
   }
 
-  doGroupCheck(tList) {
-    let tRolls = tList.map(t => {
-      return chkRoll(Number(t.adv), Number(t.bon), Number(t.mod), t.luck)
+  doGroupCheck() {
+    this.tokList = this.tokList.map(t => {
+      t.roll = chkRoll(Number(t.adv), Number(t.bon), Number(t.mod), t.luck);
+      this.mstList[t.id].roll = t.roll;
+      return t;
     });
-    let tResults = tRolls.map(t => t.total);
+    let tResults = this.tokList.map(t => t.roll.total);
     this.groupRoll = midValue(tResults);
-//    console.log(tRolls); // uncomment this line to see the individuals rolls in the console
     this.render();
   }
 
@@ -40,7 +42,7 @@ class GroupRoll5e extends Application {
         label: "Roll",
         class: "roll-dice",
         icon: "fas fa-dice-d20",
-        onclick: ev => this.doGroupCheck(this.tokList)
+        onclick: ev => this.doGroupCheck()
       }
     ].concat(buttons);
     return buttons
@@ -56,6 +58,7 @@ class GroupRoll5e extends Application {
     html.find('.bonus-value').change(event => {
       this.tokList = this.tokList.map(t => {
         t.bon = html.find('input[name="bon-' + t.id + '"]').val();
+        this.mstList[t.id].bon = t.bon;
         return t;
       });
       this.render();
@@ -70,6 +73,7 @@ class GroupRoll5e extends Application {
       field.val(newLevel);
       this.tokList = this.tokList.map(t => {
         t.adv = html.find('input[name="adv-' + t.id + '"]').val();
+        this.mstList[t.id].adv = t.adv;
         return t;
       });
       this.render();
@@ -95,7 +99,7 @@ class GroupSkillCheck extends GroupRoll5e {
   }
 
   getData() {
-    this.tokList = this.getTokenList(this.tokList, this.skillName, this.abilityName);
+    this.tokList = this.getTokenList(this.skillName, this.abilityName);
     return {
       tok: this.tokList,
       skl: this.skillName,
@@ -106,18 +110,18 @@ class GroupSkillCheck extends GroupRoll5e {
     };
   }
 
-  getTokenList(tList, skillName, abilityName) {
+  getTokenList(skillName, abilityName) {
     return canvas.tokens.controlledTokens.map(t => {
       let sklmod = t.actor.data.data.skills[skillName].mod;
       if ( abilityName !== t.actor.data.data.skills[skillName].ability ) sklmod = sklmod - t.actor.data.data.skills[skillName].value + t.actor.data.data.abilities[abilityName].mod;
       let tokRace = t.actor.data.data.details.race.value;
       let lucky = tokRace ? tokRace.toLowerCase().includes("halfling") : false;
-      let oldToken = tList.find(x => x.id === t.id && x.name === t.name);
-      let advNew = oldToken ? oldToken.adv : 0;
-      let bonNew = oldToken ? oldToken.bon : 0;
+      let advNew = this.mstList[t.id].adv ? this.mstList[t.id].adv : 0;
+      let bonNew = this.mstList[t.id].bon ? this.mstList[t.id].bon : 0;
+      let rollNew = this.mstList[t.id].roll ? this.mstList[t.id].roll : {total: "", result: ""};
       let advIcon = CONFIG._grouproll_module_advantageStatus[advNew].icon;
       let advHover = CONFIG._grouproll_module_advantageStatus[advNew].label;
-      return {id: t.id, name: t.name, adv: advNew, icon: advIcon, hover: advHover, bon: bonNew, mod: sklmod, luck: lucky};
+      return {id: t.id, name: t.name, adv: advNew, icon: advIcon, hover: advHover, bon: bonNew, roll: rollNew, mod: sklmod, luck: lucky};
     })
   }
 
@@ -156,7 +160,7 @@ class GroupAbilityCheck extends GroupRoll5e {
   }
 
   getData() {
-    this.tokList = this.getTokenList(this.tokList, this.saveRoll, this.abilityName);
+    this.tokList = this.getTokenList(this.saveRoll, this.abilityName);
     return {
       tok: this.tokList,
       sav: this.saveRoll,
@@ -166,17 +170,17 @@ class GroupAbilityCheck extends GroupRoll5e {
     };
   }
 
-  getTokenList(tList, saveRoll, abilityName) {
+  getTokenList(saveRoll, abilityName) {
     return canvas.tokens.controlledTokens.map(t => {
       let ablmod = saveRoll ? t.actor.data.data.abilities[abilityName].save : t.actor.data.data.abilities[abilityName].mod;
       let tokRace = t.actor.data.data.details.race.value;
       let lucky = tokRace ? tokRace.toLowerCase().includes("halfling") : false;
-      let oldToken = tList.find(x => x.id === t.id && x.name === t.name);
-      let advNew = oldToken ? oldToken.adv : 0;
-      let bonNew = oldToken ? oldToken.bon : 0;
+      let advNew = this.mstList[t.id].adv ? this.mstList[t.id].adv : 0;
+      let bonNew = this.mstList[t.id].bon ? this.mstList[t.id].bon : 0;
+      let rollNew = this.mstList[t.id].roll ? this.mstList[t.id].roll : {total: "", result: ""};
       let advIcon = CONFIG._grouproll_module_advantageStatus[advNew].icon;
       let advHover = CONFIG._grouproll_module_advantageStatus[advNew].label;
-      return {id: t.id, name: t.name, adv: advNew, icon: advIcon, hover: advHover, bon: bonNew, mod: ablmod, luck: lucky};
+      return {id: t.id, name: t.name, adv: advNew, icon: advIcon, hover: advHover, bon: bonNew, roll: rollNew, mod: ablmod, luck: lucky};
     })
   }
 
