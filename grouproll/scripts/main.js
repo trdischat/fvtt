@@ -112,16 +112,17 @@ class GroupSkillCheck extends GroupRoll5e {
 
   getTokenList(skillName, abilityName) {
     return canvas.tokens.controlledTokens.map(t => {
+      if (this.mstList[t.id] === undefined) {
+        this.mstList[t.id] = {adv: 0, bon: 0, roll: {total: "", result: ""}};
+      }
+      let m = this.mstList[t.id];
       let sklmod = t.actor.data.data.skills[skillName].mod;
       if ( abilityName !== t.actor.data.data.skills[skillName].ability ) sklmod = sklmod - t.actor.data.data.skills[skillName].value + t.actor.data.data.abilities[abilityName].mod;
       let tokRace = t.actor.data.data.details.race.value;
       let lucky = tokRace ? tokRace.toLowerCase().includes("halfling") : false;
-      let advNew = this.mstList[t.id].adv ? this.mstList[t.id].adv : 0;
-      let bonNew = this.mstList[t.id].bon ? this.mstList[t.id].bon : 0;
-      let rollNew = this.mstList[t.id].roll ? this.mstList[t.id].roll : {total: "", result: ""};
-      let advIcon = CONFIG._grouproll_module_advantageStatus[advNew].icon;
-      let advHover = CONFIG._grouproll_module_advantageStatus[advNew].label;
-      return {id: t.id, name: t.name, adv: advNew, icon: advIcon, hover: advHover, bon: bonNew, roll: rollNew, mod: sklmod, luck: lucky};
+      let advIcon = CONFIG._grouproll_module_advantageStatus[m.adv].icon;
+      let advHover = CONFIG._grouproll_module_advantageStatus[m.adv].label;
+      return {id: t.id, name: t.name, adv: m.adv, icon: advIcon, hover: advHover, bon: m.bon, roll: m.roll, mod: sklmod, luck: lucky};
     })
   }
 
@@ -172,15 +173,16 @@ class GroupAbilityCheck extends GroupRoll5e {
 
   getTokenList(saveRoll, abilityName) {
     return canvas.tokens.controlledTokens.map(t => {
+      if (this.mstList[t.id] === undefined) {
+        this.mstList[t.id] = {adv: 0, bon: 0, roll: {total: "", result: ""}};
+      }
+      let m = this.mstList[t.id];
       let ablmod = saveRoll ? t.actor.data.data.abilities[abilityName].save : t.actor.data.data.abilities[abilityName].mod;
       let tokRace = t.actor.data.data.details.race.value;
       let lucky = tokRace ? tokRace.toLowerCase().includes("halfling") : false;
-      let advNew = this.mstList[t.id].adv ? this.mstList[t.id].adv : 0;
-      let bonNew = this.mstList[t.id].bon ? this.mstList[t.id].bon : 0;
-      let rollNew = this.mstList[t.id].roll ? this.mstList[t.id].roll : {total: "", result: ""};
-      let advIcon = CONFIG._grouproll_module_advantageStatus[advNew].icon;
-      let advHover = CONFIG._grouproll_module_advantageStatus[advNew].label;
-      return {id: t.id, name: t.name, adv: advNew, icon: advIcon, hover: advHover, bon: bonNew, roll: rollNew, mod: ablmod, luck: lucky};
+      let advIcon = CONFIG._grouproll_module_advantageStatus[m.adv].icon;
+      let advHover = CONFIG._grouproll_module_advantageStatus[m.adv].label;
+      return {id: t.id, name: t.name, adv: m.adv, icon: advIcon, hover: advHover, bon: m.bon, roll: m.roll, mod: ablmod, luck: lucky};
     })
   }
 
