@@ -33,10 +33,13 @@ class GroupRoll5e extends Application {
     let buttons = super._getHeaderButtons();
     buttons = [
       {
-        label: "Update",
-        class: "update-values",
-        icon: "fas fa-redo",
-        onclick: ev => this.render()
+        label: "Reset",
+        class: "reset-values",
+        icon: "fas fa-undo",
+        onclick: ev => {
+          canvas.tokens.ownedTokens.map(t => this.mstList[t.id] = {adv: 0, bon: 0, roll: {total: "", result: ""}});
+          this.render();
+        }
       },
       {
         label: "Roll",
