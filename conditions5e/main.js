@@ -110,7 +110,6 @@ Token.prototype._updateHealthOverlay = function(tok) {
     else newHealth = "modules/conditions5e/icons/almostdead.svg";
   }
   else if ( curHP / maxHP < 0.5 ) newHealth = "modules/conditions5e/icons/wounded.svg";
-  console.log(priorHealth, newHealth);
   if ( newHealth !== priorHealth ) {
     if ( newHealth === null ) tok.toggleOverlay(priorHealth);
     else tok.toggleOverlay(newHealth);
@@ -118,5 +117,9 @@ Token.prototype._updateHealthOverlay = function(tok) {
 };
 
 Hooks.on("updateToken", (object, parentId, updated) => {
-  object._updateHealthOverlay (object);
+  object._updateHealthOverlay(object);
+});
+
+Hooks.on("updateActor", (entity, updated) => {
+  entity.getActiveTokens(true).map(x => x._updateHealthOverlay(x));
 });
