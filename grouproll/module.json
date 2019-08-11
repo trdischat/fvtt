@@ -5,7 +5,7 @@
   "version": "0.0.8",
   "minimumCoreVersion": "0.3.4",
   "author": "trdischat",
-  "systems": ["dnd5e"],
+  "systems": ["dnd5e", "dnd5eJP"],
   "scripts": ["./scripts/main.js", "./scripts/rolls.js", "./scripts/config.js", "./scripts/patches.js"],
   "styles": ["./css/grouproll.css"],
   "packs": [],
