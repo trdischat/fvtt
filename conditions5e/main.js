@@ -56,14 +56,20 @@ CONFIG.conditionTypes = {
   "wounded": "Wounded"
 };
 
+  /**
+   * The control icons used for rendering common HUD operations
+   * @type {Object}
+   */
+CONFIG.controlIcons = {
+    combat: "icons/svg/combat.svg",
+    visibility: "modules/conditions5e/icons/invisible.svg",
+    effects: "icons/svg/aura.svg",
+    lock: "icons/svg/padlock.svg",
+    up: "icons/svg/up.svg",
+    down: "icons/svg/down.svg",
+    defeated: "modules/conditions5e/icons/dead.svg"
+  };
   
-CONFIG.Token = {
-  visibilityControlIcon: "modules/conditions5e/icons/invisible.svg",
-  effectsControlIcon: "icons/svg/aura.svg",
-  combatControlIcon: "icons/svg/combat.svg",
-  defeatedIcon: "modules/conditions5e/icons/dead.svg"
-};
-
 /**
  * Utility function used by patch functions to alter specific lines in a class
  * @param {Class} klass           Class to be patched
@@ -89,8 +95,8 @@ function patchClass(klass, func, line_number, line, new_line) {
 
 function patchCombatTrackerClass() {
   newClass = patchClass(CombatTracker, CombatTracker.prototype._onCombatantControl, 18,
-    `if ( isDefeated && !token.data.overlayEffect ) token.toggleOverlay(CONFIG.Token.defeatedIcon);`,
-    `if ( isDefeated && token.data.overlayEffect !== CONFIG.Token.defeatedIcon ) token.toggleOverlay(CONFIG.Token.defeatedIcon);`);
+    `if ( isDefeated && !token.data.overlayEffect ) token.toggleOverlay(CONFIG.controlIcons.defeated);`,
+    `if ( isDefeated && token.data.overlayEffect !== CONFIG.controlIcons.defeated ) token.toggleOverlay(CONFIG.controlIcons.defeated);`);
   if (!newClass) return;
   CombatTracker = newClass
 }
