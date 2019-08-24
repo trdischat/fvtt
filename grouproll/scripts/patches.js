@@ -56,32 +56,3 @@ if (patchedRollClass == undefined) {
   patchRollClass();
   var patchedRollClass = true;
 }
-
-function patchTokenLayerClass() {
-  newClass = patchClass(TokenLayer, TokenLayer.prototype.selectObjects, 1,
-    `this.releaseAll(false);`,
-    `let oldSet = canvas.tokens.controlledTokens;`);
-  if (!newClass) return;
-  newClass = patchClass(newClass, newClass.prototype.selectObjects, 3,
-    `controllable.forEach(t => {`,
-    `let newSet = controllable.filter(t => {`);
-  if (!newClass) return;
-  newClass = patchClass(newClass, newClass.prototype.selectObjects, 6,
-    `t.control({releaseOthers: false, initializeSight: false});`,
-    `return t;`);
-  if (!newClass) return;
-  newClass = patchClass(newClass, newClass.prototype.selectObjects, 9,
-    `canvas.sight.initializeSight();`,
-    `let controlObj = newSet.filter(x => !oldSet.includes(x));
-    let releaseObj = oldSet.filter(x => !newSet.includes(x));
-    controlObj.forEach(t => t.control({releaseOthers: false, initializeSight: false}));
-    releaseObj.forEach(t => t.release({resetSight: false}));
-    canvas.sight.initializeSight();`);
-  if (!newClass) return;
-  TokenLayer = newClass
-}
-
-if (patchedTokenLayerClass == undefined) {
-  patchTokenLayerClass();
-  var patchedTokenLayerClass = true;
-}
