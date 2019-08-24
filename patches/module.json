@@ -3,7 +3,6 @@
   "title": "System Patches",
   "description": "Personal collection of patches to core and system scripts.",
   "version": "0.1.6",
-  "minimumCoreVersion": "0.3.4",
   "author": "trdischat",
   "scripts": ["./scripts/patchClass.js", "./scripts/patchDice.js", "./scripts/patchSound.js"],
   "styles": ["./css/patchStyles.css"],
