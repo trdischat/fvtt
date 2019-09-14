@@ -8,7 +8,7 @@
  */
 function patchDice5eClass() {
     oldRoll = Dice5e.d20Roll.toString()
-    newClass = patchClass(Dice5e, Dice5e.d20Roll, 30,
+    newClass = patchClass(Dice5e, Dice5e.d20Roll, 36,
       `parts = ["1d20"].concat(parts);`,
       `parts = title.includes("Attack Roll") ? ["1d20"].concat(parts) : ["2d10+1-1d2"].concat(parts);`);
     if (!newClass) return;
@@ -45,7 +45,7 @@ if (patchedDieClass == undefined) {
 }
 
 function patchRollClass() {
-    newClass = patchClass(Roll, Roll.prototype.constructor, 43,
+    newClass = patchClass(Roll, Roll.prototype.constructor, 48,
       `reroll: /r(<=|>=|<|>)?([0-9]+)?/,`,
       `reroll: /r(<=|>=|<|>)?([0-9]+)?(?:=([0-9]+))?/,`);
     if (!newClass) return;
