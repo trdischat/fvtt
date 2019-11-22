@@ -110,12 +110,12 @@ class GroupSkillCheck extends GroupRoll5e {
     this.abilityName = "dex";
   }
 
-	static get defaultOptions() {
-	  const options = super.defaultOptions;
-	  options.id = "group-skill-check";
-	  options.title = "Group Skill Check";
-	  options.template = "public/modules/grouproll/templates/group-skill-check.html";
-	  return options;
+  static get defaultOptions() {
+    const options = super.defaultOptions;
+    options.id = "group-skill-check";
+    options.title = "Group Skill Check";
+    options.template = "public/modules/grouproll/templates/group-skill-check.html";
+    return options;
   }
 
   getData() {
@@ -229,31 +229,27 @@ class GroupAbilityCheck extends GroupRoll5e {
 
 }
 
-Hooks.on('renderSceneControls', (obj, html, data) => {
-  if (obj.controls.token.tools.grouproll_skills == undefined && game.user.isGM) {
-    obj.controls.token.tools.grouproll_skills = {
-      name: "Group Skill Check",
+Hooks.on('getSceneControlButtons', controls => {
+  controls[0].tools.push(
+    {
+      name: "skill",
+      title: "Group Skill Check",
       icon: "fas fa-user-check",
+      visible: game.user.isGM,
       onClick: () => {
-        obj.activeControl = "token";
-        obj.controls[obj.activeControl].activeTool = "select";
+        controls[0].activeTool = "select";
         return new GroupSkillCheck().render(true);
-      },
-      visible: game.user.isGM
-    };
-    obj.render();
-  };
-  if (obj.controls.token.tools.grouproll_abilities == undefined && game.user.isGM) {
-    obj.controls.token.tools.grouproll_abilities = {
-      name: "Group Ability Check",
+      }
+    },
+    {
+      name: "ability",
+      title: "Group Ability Check",
       icon: "fas fa-user-shield",
+      visible: game.user.isGM,
       onClick: () => {
-        obj.activeControl = "token";
-        obj.controls[obj.activeControl].activeTool = "select";
+        controls[0].activeTool = "select";
         return new GroupAbilityCheck().render(true);
-      },
-      visible: game.user.isGM
-    };
-    obj.render();
-  };
+      }
+    }
+  );
 });
