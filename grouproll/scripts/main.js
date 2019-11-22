@@ -29,6 +29,17 @@ class GroupRoll5e extends Application {
     this.render();
   }
 
+  doPassiveCheck() {
+    this.tokList = this.tokList.map(t => {
+      t.roll = chkPassive(Number(t.adv), Number(t.bon), Number(t.mod));
+      this.mstList[t.id].roll = t.roll;
+      return t;
+    });
+    let tResults = this.tokList.map(t => t.roll.total);
+    this.groupRoll = midValue(tResults);
+    this.render();
+  }
+
   _getHeaderButtons() {
     let buttons = super._getHeaderButtons();
     buttons = [
@@ -40,6 +51,12 @@ class GroupRoll5e extends Application {
           canvas.tokens.ownedTokens.map(t => this.mstList[t.id] = {adv: 0, bon: 0, roll: {total: "", result: ""}});
           this.render();
         }
+      },
+      {
+        label: "Passive",
+        class: "no-dice",
+        icon: "fas fa-lock",
+        onclick: ev => this.doPassiveCheck()
       },
       {
         label: "Roll",

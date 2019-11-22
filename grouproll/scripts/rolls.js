@@ -38,3 +38,9 @@ function hitRoll(adv, bon, modifier, lucky) {
   rStr = rStr + " + @bonus + @mod";
   return new Roll(rStr, rData).roll();
 }
+
+function chkPassive(adv, bon, modifier) {
+  var rStr = "@base + @bonus + @mod";
+  var rData = {base: (adv * 5) + 10, bonus: bon, mod: modifier};
+  return new Roll(rStr, rData).roll();
+}
